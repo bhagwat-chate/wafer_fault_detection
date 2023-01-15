@@ -27,9 +27,11 @@ class TrainingDataPipeline:
             logging.info("Start training raw data validation!")
 
             pattern, LengthOfDateStampInFile, LengthOfTimeStampInFile, NumberofColumns, ColName = self.raw_data_validation.valuesFromSchema()
-            manualexp = self.raw_data_validation.manualRegexCreation()
-            self.raw_data_validation.createDirectoryForGoodBadRawData()
-            self.raw_data_validation.deleteExistingBadDataTrainingFolder()
+            regex = self.raw_data_validation.manualRegexCreation()
+            # self.raw_data_validation.createDirectoryForGoodBadRawData()
+            self.raw_data_validation.validateFileNameRaw(regex, LengthOfDateStampInFile, LengthOfTimeStampInFile)
+            self.raw_data_validation.validateColumnLength(NumberofColumns)
+            self.raw_data_validation.validateMissingValuesInWholeColumn()
             self.raw_data_validation.moveBadFilesToArchiveBad()
 
             logging.info("Training raw data validation completed")

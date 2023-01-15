@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# ignore directories
+wafer/TrainingArchiveBadData
+wafer/data_ingestion/Training_raw_files_validated
+
 # C extensions
 *.so
 
