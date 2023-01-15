@@ -5,6 +5,8 @@ from wafer.exception import WaferException
 import sys, os
 from os import listdir
 import json
+import warnings
+warnings.filterwarnings('ignore')
 class DB_Operation:
     def __init__(self):
         self.goodFilePath = "wafer/data_ingestion/Training_raw_files_validated/Good_Raw"
@@ -24,6 +26,7 @@ class DB_Operation:
             for file in listdir("wafer/data_ingestion/Training_raw_files_validated/Good_Raw/"):
                 data = pd.read_csv("wafer/data_ingestion/Training_raw_files_validated/Good_Raw/"+file)
                 self.collectionConnection.insert_many(data.to_dict(orient='record'))
+
             logging.info("data load successful!")
 
         except WaferException as e:
@@ -33,7 +36,7 @@ class DB_Operation:
         try:
             data = pd.DataFrame(list(self.collectionConnection.find()))
             data.drop('_id', axis=1, inplace=True)
-            data.to_csv("wafer/data_ingestion/Training_raw_files_validated/Training_data.csv", index=False)
+            data.to_csv("wafer/data_ingestion/Data_Export/Training_data.csv", index=False)
 
             logging.info("data extraction successful!")
         except WaferException as e:
