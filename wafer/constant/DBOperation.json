@@ -1,0 +1,5 @@
+{
+  "dbname": "waferdb",
+  "collectionName": "waferCollection",
+  "mongodb": "mongodb+srv://Bhagwat_c:Bchate2023@cluster0.q06oiaw.mongodb.net/?retryWrites=true&w=majority"
+}

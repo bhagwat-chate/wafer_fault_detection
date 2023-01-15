@@ -19,7 +19,7 @@ class Raw_Data_Validation:
 
     def __init__(self, path):
         logging.info("Start raw data validation!")
-        self.batch_directory = path
+        # self.batch_directory = path
         self.schema_path = 'wafer/constant/training_schema.json'
 
     def valuesFromSchema(self):
@@ -206,7 +206,7 @@ class Raw_Data_Validation:
                                     "wafer/data_ingestion/Training_raw_files_validated/Bad_Raw/")
                         logging.info("File {} moved from Good to Bad raw".format(filename))
 
-            logging.info("File name validation completed")
+            logging.info("File name validation complete")
         except WaferException as e:
             raise WaferException(e, sys)
 
@@ -221,7 +221,7 @@ class Raw_Data_Validation:
                     shutil.copy("wafer/Training_Batch_Files/"+file, "wafer/data_ingestion/Training_raw_files_validated/Good_Raw")
                 else:
                     shutil.copy("wafer/Training_Batch_Files/"+file, "wafer/data_ingestion/Training_raw_files_validated/Bad_Raw")
-            logging.info("Column length validation completed")
+            logging.info("Column length validation complete")
         except WaferException as e:
             raise WaferException(e, sys)
 
@@ -240,6 +240,6 @@ class Raw_Data_Validation:
                 if count == 0:
                     csv.rename(columns={"Unnamed: 0": "Wafer"}, inplace=True)
                     csv.to_csv("wafer/data_ingestion/Training_raw_files_validated/Good_Raw/"+file, index=None, header=True)
-            logging.info("Missing values in whole column validation completed")
+            logging.info("Missing values in whole column validation complete")
         except WaferException as e:
             raise WaferException(e, sys)
