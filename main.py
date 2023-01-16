@@ -10,11 +10,11 @@ if __name__ == '__main__':
     try:
         logging.info("START OF WAFER FAULT DETECTION PROJECT EXECUTION")
 
-        data_ingestion = TrainingDataPipeline()
-        data_ingestion.train_data_validation()
-
-        model_training = Model_Training_Pipeline()
-        model_training.train_model()
+        # data_ingestion = TrainingDataPipeline()
+        # data_ingestion.train_data_validation()
+        #
+        # model_training = Model_Training_Pipeline()
+        # model_training.train_model()
 
         prediction = Model_Prediction_Pipeline()
         prediction.predict_with_model()

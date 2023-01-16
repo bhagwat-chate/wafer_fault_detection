@@ -9,9 +9,9 @@ from wafer.exception import WaferException
 import sys
 import datetime
 class Prediction:
-    def __init__(self, path):
-        if path is not None:
-            self.pred_data_val = Predict_Raw_Data_Validation(path)
+    def __init__(self):
+        # if path is not None:
+        self.pred_data_val = Predict_Raw_Data_Validation()
 
     def prediction_from_model(self):
         try:

@@ -5,7 +5,7 @@ import sys
 
 class Model_Prediction_Pipeline:
     def __init__(self):
-        self.prediction = Prediction("wafer/Prediction_Batch_Files")
+        self.prediction = Prediction()
 
     def predict_with_model(self):
         try:
