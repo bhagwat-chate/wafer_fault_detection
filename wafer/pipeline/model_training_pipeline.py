@@ -1,12 +1,11 @@
 from sklearn.model_selection import train_test_split
 from wafer.core_ml.data_preprocessing import Preprocessor
-from wafer.core_ml.clustering import KMeansClustering, KMeans
+from wafer.core_ml.clustering import KMeansClustering
 from wafer.core_ml.model_tuner import Model_Finder
 from wafer.core_ml.file_methods import File_Operations
 from wafer.logger import logging
 from wafer.exception import WaferException
 import json
-import pandas as pd
 import sys
 
 
@@ -44,6 +43,8 @@ class Model_Training_Pipeline:
             list_of_clusters = X['Cluster'].unique()
 
             for i in list_of_clusters:
+
+                logging.info("start model training for cluster {}".format(i))
                 cluster_data = X[X['Cluster'] == i]
 
                 cluster_features = cluster_data.drop(['Labels','Cluster'], axis=1)
@@ -54,7 +55,9 @@ class Model_Training_Pipeline:
                 best_model_name, best_model = model_finder.get_best_model(x_train, y_train, x_test, y_test)
 
                 file_op = File_Operations()
-                save_model = file_op.save_model(best_model, best_model_name+str(i))
+                file_op.save_model(best_model, best_model_name+str(i))
+            logging.info("model training pipeline complete")
+
         except WaferException as e:
             raise WaferException(e, sys)
 
