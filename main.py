@@ -1,7 +1,5 @@
 # from wafer.logger import logging
 # from wafer.exception import SensorException
-from test_file import Test
-import sys
 
 from wafer.pipeline.data_ingestion_pipeline import TrainingDataPipeline
 from wafer.pipeline.model_training_pipeline import Model_Training_Pipeline

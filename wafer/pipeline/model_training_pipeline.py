@@ -56,7 +56,7 @@ class Model_Training_Pipeline:
 
                 file_op = File_Operations()
                 file_op.save_model(best_model, best_model_name+str(i))
-            logging.info("model training pipeline complete")
+            logging.info("model training pipeline execution complete")
 
         except WaferException as e:
             raise WaferException(e, sys)

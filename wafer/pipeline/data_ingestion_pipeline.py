@@ -26,7 +26,7 @@ class TrainingDataPipeline:
         Revisions: None
         """
         try:
-            logging.info("Start training raw data validation!")
+            logging.info("### Data ingestion pipeline initiated ###")
 
             # Data Validation
             pattern, LengthOfDateStampInFile, LengthOfTimeStampInFile, NumberofColumns, ColName = self.raw_data_validation.valuesFromSchema()
@@ -43,7 +43,7 @@ class TrainingDataPipeline:
             self.dbops.loadData()
             self.dbops.readData()
 
-            logging.info("Training raw data validation complete")
+            logging.info("Data ingestion pipeline execution complete")
 
         except WaferException as e:
             raise WaferException(e, sys)
