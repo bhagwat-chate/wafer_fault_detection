@@ -11,7 +11,7 @@ from wafer.exception import WaferException
 
 
 class Predict_Raw_Data_Validation:
-    def __init__(self, path):
+    def __init__(self):
         logging.info("Start of prediction data validation!")
         self.schema_path = 'wafer/constant/prediction_schema.json'
 
