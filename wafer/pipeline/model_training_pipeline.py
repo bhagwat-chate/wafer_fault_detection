@@ -1,10 +1,13 @@
 from sklearn.model_selection import train_test_split
 from wafer.core_ml.data_preprocessing import Preprocessor
+from wafer.core_ml.clustering import KMeansClustering, KMeans
 from wafer.logger import logging
 from wafer.exception import WaferException
 import json
 import pandas as pd
 import sys
+
+
 class Model_Training_Pipeline:
     def __init__(self):
         self.col_to_drop = None
@@ -30,7 +33,22 @@ class Model_Training_Pipeline:
             self.data = self.preprocessor.remove_column(self.data, self.col_to_drop)
 
             #####  Applying the Clustering Approach #####
-            kmeans =clustering.KMeansClustering(self.file_object, )
+            kmeans = KMeansClustering()
+            number_of_clusters = kmeans.elbow_plot(X)
+
+            X = kmeans.create_clusters(X, number_of_clusters)
+            X['Labels'] = Y
+
+            list_of_clusters = X['Cluster'].unique()
+
+            for i in list_of_clusters:
+                cluster_data = X[X['Cluster'] == i]
+
+                cluster_features = cluster_data.drop(['Labels','Cluster'], axis=1)
+                cluster_label = cluster_data['Labels']
+
+                x_train, x_test, y_train, y_test = train_test_split(cluster_features, cluster_label, test_size=1/3, random_state=355)
+                model_finder = tuner.model_finder()
         except WaferException as e:
             raise WaferException(e, sys)
 

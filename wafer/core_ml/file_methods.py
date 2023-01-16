@@ -1,5 +1,6 @@
 import pickle
-import os, sys
+import os
+import sys
 import shutil
 from wafer.logger import logging
 from wafer.exception import WaferException

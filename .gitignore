@@ -6,6 +6,8 @@ __pycache__/
 # ignore directories
 wafer/TrainingArchiveBadData
 wafer/data_ingestion/Training_raw_files_validated
+wafer/core_ml/data_preprocessing
+wafer/core_ml/models
 
 # C extensions
 *.so
