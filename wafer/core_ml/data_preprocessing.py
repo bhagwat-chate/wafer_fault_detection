@@ -13,6 +13,8 @@ class Preprocessor:
     def get_data(self, path):
         try:
             self.data = pd.read_csv(path)
+
+            self.data = self.data[self.data['Good/Bad'] == -1].replace(-1, 0)
             logging.info("Data loaded for model training")
             return self.data
         except WaferException as e:

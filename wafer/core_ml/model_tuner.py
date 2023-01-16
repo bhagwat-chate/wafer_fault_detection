@@ -38,7 +38,7 @@ class Model_Finder:
             self.max_features = self.grid.best_params_['max_features']
             self.n_estimators = self.grid.best_params_['n_estimators']
 
-            self.clf = RandomForestClassifier(n_estimators=self.n_estimators, criterion=self.criterion, \
+            self.clf = RandomForestClassifier(n_estimators=self.n_estimators, criterion=self.criterion,
                                               max_depth=self.max_depth, max_features=self.max_features)
             self.clf.fit(train_x, train_y)
 
@@ -72,14 +72,14 @@ class Model_Finder:
     def get_best_model(self, train_x, train_y, test_x, test_y):
         try:
             self.xgboost = self.get_best_params_for_xgboost(train_x, train_y)
-            self.prediction_xgboost = self.xgboost.predict(test_y)
+            self.prediction_xgboost = self.xgboost.predict(test_x)
 
             if len(test_y.unique()) == 1:
                 self.xgboost_score = accuracy_score(test_y, self.prediction_xgboost)
-                logging.info("XGBoost accuracy: {}".format(str(self.xgboost_score)))
+                logging.info("Accuracy of XGBoost: {}".format(str(self.xgboost_score)))
             else:
                 self.xgboost_score = roc_auc_score(test_y, self.prediction_xgboost)
-                logging.info("XGBoost accuracy: ".format(str(self.xgboost_score)))
+                logging.info("Accuracy of XGBoost: {}".format(str(self.xgboost_score)))
 
             self.random_forest = self.get_best_param_for_random_forest(train_x, train_y)
             self.prediction_random_forest = self.random_forest.predict(test_x)
