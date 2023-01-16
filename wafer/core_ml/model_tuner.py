@@ -76,20 +76,20 @@ class Model_Finder:
 
             if len(test_y.unique()) == 1:
                 self.xgboost_score = accuracy_score(test_y, self.prediction_xgboost)
-                logging.info("Accuracy of XGBoost: {}".format(str(self.xgboost_score)))
+                logging.info("Accuracy of XGBoost: {}".format(str(self.xgboost_score*100)))
             else:
                 self.xgboost_score = roc_auc_score(test_y, self.prediction_xgboost)
-                logging.info("Accuracy of XGBoost: {}".format(str(self.xgboost_score)))
+                logging.info("Accuracy of XGBoost: {}".format(str(self.xgboost_score*100)))
 
             self.random_forest = self.get_best_param_for_random_forest(train_x, train_y)
             self.prediction_random_forest = self.random_forest.predict(test_x)
 
             if len(test_y.unique()) == 1:
                 self.random_forest_score = accuracy_score(test_y, self.prediction_random_forest)
-                logging.info("Accuracy of random forest: {}".format(self.random_forest_score))
+                logging.info("Accuracy of random forest: {}".format(self.random_forest_score*100))
             else:
                 self.random_forest_score = roc_auc_score((test_y, self.prediction_random_forest))
-                logging.info("Accuracy of random forest: {}".format(self.random_forest_score))
+                logging.info("Accuracy of random forest: {}".format(self.random_forest_score*100))
 
             if self.xgboost_score > self.random_forest_score:
                 return 'XGBoost', self.xgboost
