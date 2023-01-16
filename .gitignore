@@ -8,6 +8,9 @@ wafer/TrainingArchiveBadData
 wafer/data_ingestion/Training_raw_files_validated
 wafer/core_ml/data_preprocessing
 wafer/core_ml/models
+wafer/prediction/prediction_artifact
+wafer/prediction/prediction_raw_files_validated
+wafer/archive
 
 # C extensions
 *.so

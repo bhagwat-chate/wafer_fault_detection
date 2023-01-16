@@ -1,13 +1,27 @@
-# from wafer.logger import logging
-# from wafer.exception import SensorException
+from wafer.logger import logging
+from wafer.exception import WaferException
+import sys
 
 from wafer.pipeline.data_ingestion_pipeline import TrainingDataPipeline
 from wafer.pipeline.model_training_pipeline import Model_Training_Pipeline
+from wafer.pipeline.prediction_pipeline import Model_Prediction_Pipeline
 
 if __name__ == '__main__':
-    obj = TrainingDataPipeline()
-    obj.train_data_validation()
+    try:
+        logging.info("START OF WAFER FAULT DETECTION PROJECT EXECUTION")
 
-    model_training = Model_Training_Pipeline()
-    model_training.train_model()
+        data_ingestion = TrainingDataPipeline()
+        data_ingestion.train_data_validation()
+
+        model_training = Model_Training_Pipeline()
+        model_training.train_model()
+
+        prediction = Model_Prediction_Pipeline()
+        prediction.predict_with_model()
+
+        logging.info("END OF WAFER FAULT DETECTION PROJECT EXECUTION")
+
+    except WaferException as e:
+        raise WaferException(e, sys)
+
 
