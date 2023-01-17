@@ -18,7 +18,7 @@ class Raw_Data_Validation:
     """
 
     def __init__(self, path):
-        logging.info("Start raw data validation!")
+        logging.info("Start training raw data validation!")
         # self.batch_directory = path
         self.schema_path = 'wafer/constant/training_schema.json'
 
@@ -159,12 +159,12 @@ class Raw_Data_Validation:
             source = "wafer/data_ingestion/Training_raw_files_validated/Bad_Raw/"
 
             if os.path.isdir(source):
-                path = "TrainingArchiveBadData"
+                # path = "TrainingArchiveBadData"
+                #
+                # if not os.path.isdir(path):
+                #     os.makedirs(path)
 
-                if not os.path.isdir(path):
-                    os.makedirs(path)
-
-                dest = 'wafer/TrainingArchiveBadData/Bad_Data_' + str(date) + "_" + str(time)
+                dest = 'wafer/archive/training/Bad_Data_' + str(date) + "_" + str(time)
                 if not os.path.isdir(dest):
                     os.makedirs(dest)
                 files = os.listdir(source)
@@ -219,8 +219,11 @@ class Raw_Data_Validation:
 
                 if csv.shape[1] == numberOfColumns:
                     shutil.copy("wafer/Training_Batch_Files/"+file, "wafer/data_ingestion/Training_raw_files_validated/Good_Raw")
+                    logging.info("File {} moved from 'wafer/Training_Batch_Files' to Bad raw".format(file))
                 else:
                     shutil.copy("wafer/Training_Batch_Files/"+file, "wafer/data_ingestion/Training_raw_files_validated/Bad_Raw")
+                    logging.info("File {} moved from 'wafer/Training_Batch_Files' to Bad raw".format(file))
+
             logging.info("Column length validation complete")
         except WaferException as e:
             raise WaferException(e, sys)
