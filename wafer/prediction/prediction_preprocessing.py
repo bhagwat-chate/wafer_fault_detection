@@ -6,21 +6,21 @@ from wafer.exception import WaferException
 import os, sys
 
 
-                                        ########## DELETE THIS FILE
 class Preprocessor:
-
     def __init__(self):
+        self.col_to_drop = None
+        self.new_data = None
+        self.new_array = None
+        self.null_count = None
+        self.columns = None
         self.data = None
 
     def get_data(self, path):
         try:
-            self.data = pd.read_csv(path)
-
-            self.data = self.data[self.data['Good/Bad'] == -1].replace(-1, 0)
-            logging.info("Data loaded for model training")
-            return self.data
+            pass
         except WaferException as e:
             raise WaferException(e, sys)
+
     def remove_column(self, data, columns):
         try:
             self.columns = columns
@@ -29,16 +29,6 @@ class Preprocessor:
             logging.info("removed unwanted columns: {}".format(columns))
 
             return data
-        except WaferException as e:
-            raise WaferException(e, sys)
-
-    def separate_label_feature(self, data, label_column_name):
-        try:
-            self.X = data.drop(label_column_name, axis=1)
-            self.y = data[label_column_name]
-
-            logging.info("Label & features separated")
-            return self.X, self.y
         except WaferException as e:
             raise WaferException(e, sys)
 
@@ -56,7 +46,7 @@ class Preprocessor:
                 df_with_null['columns'] = self.data.columns
                 df_with_null['missing_value_count'] = np.asarray(self.data.isna().sum())
                 df_with_null = df_with_null[df_with_null.missing_value_count > 0]
-                df_with_null.to_csv("wafer/core_ml/data_preprocessing/null_value.csv", index=False)
+                df_with_null.to_csv("wafer/prediction/prediction_artifact/null_value.csv", index=False)
                 logging.info("Null value present")
 
             if flage == 0:
@@ -89,4 +79,3 @@ class Preprocessor:
             return self.col_to_drop
         except WaferException as e:
             raise WaferException(e, sys)
-

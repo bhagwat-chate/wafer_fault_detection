@@ -40,5 +40,6 @@ class Prediction_DB_Operation:
             data.to_csv("wafer/prediction/prediction_artifact/Prediction_data.csv", index=False)
 
             logging.info("prediction data extraction complete")
+            return data
         except WaferException as e:
             raise WaferException(e, sys)
