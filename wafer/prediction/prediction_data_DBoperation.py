@@ -36,7 +36,7 @@ class Prediction_DB_Operation:
     def readData(self):
         try:
             data = pd.DataFrame(list(self.collectionConnection.find()))
-            data.drop('_id', axis=1, inplace=True)
+            data.drop(['_id', 'Unnamed: 0'], axis=1, inplace=True)
             data.to_csv("wafer/prediction/prediction_artifact/Prediction_data.csv", index=False)
 
             logging.info("prediction data extraction complete")

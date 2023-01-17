@@ -35,7 +35,7 @@ class Preprocessor:
     def is_null_present(self, data):
         try:
             flage = 0
-            self.null_count = self.data.isna().sum()
+            self.null_count = data.isna().sum()
 
             for i in self.null_count:
                 if i > 0:
@@ -43,8 +43,8 @@ class Preprocessor:
 
             if flage == 1:
                 df_with_null = pd.DataFrame()
-                df_with_null['columns'] = self.data.columns
-                df_with_null['missing_value_count'] = np.asarray(self.data.isna().sum())
+                df_with_null['columns'] = data.columns
+                df_with_null['missing_value_count'] = np.asarray(data.isna().sum())
                 df_with_null = df_with_null[df_with_null.missing_value_count > 0]
                 df_with_null.to_csv("wafer/prediction/prediction_artifact/null_value.csv", index=False)
                 logging.info("Null value present")
@@ -59,8 +59,8 @@ class Preprocessor:
     def null_value_impute(self, data):
         try:
             imputer = KNNImputer(n_neighbors=3, weights='uniform', missing_values=np.nan)
-            self.new_array = imputer.fit_transform(self.data)
-            self.new_data = pd.DataFrame(data=self.new_array, columns=self.data.columns)
+            self.new_array = imputer.fit_transform(data)
+            self.new_data = pd.DataFrame(data=self.new_array, columns=data.columns)
 
             logging.info("missing value imputation complete")
             return self.new_data
