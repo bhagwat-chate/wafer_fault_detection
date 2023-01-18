@@ -28,20 +28,17 @@ class Prediction_Pipeline:
             self.raw_data_validation.moveBadFilesToArchiveBad()
 
             # Data Transformation
-            self.data_transform.missing_value_imputation()
+
 
             # Data load into MongoDB
             self.dbops.loadData()
             data = self.dbops.readData()
 
             preprocessor = Preprocessor()
-            is_null_present = preprocessor.is_null_present(data)
 
-            if is_null_present:
-                data = preprocessor.null_value_impute(data)
+            data = preprocessor.remove_column(data)  # DONE
 
-            cols_to_drop = preprocessor.get_columns_with_zero_std_deviation(data)
-            data = preprocessor.remove_column(data, cols_to_drop)
+            data = self.data_transform.missing_value_imputation(data)
 
             file_loader = File_Operations()
             kmeans = file_loader.load_model('KMeans')

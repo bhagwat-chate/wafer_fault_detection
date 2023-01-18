@@ -22,22 +22,40 @@ class Model_Training_Pipeline:
 
     def train_model(self):
         try:
+            # self.data = self.preprocessor.get_data(self.path)
+            # self.data = self.preprocessor.remove_column(self.data, 'Wafer')
+            # flage = self.preprocessor.is_null_present(self.data)
+            #
+            # if flage == 1:
+            #     self.data = self.preprocessor.null_value_impute(self.data)
+            #
+            # X, Y = self.preprocessor.separate_label_feature(self.data, "Good/Bad")
+            # self.col_to_drop = self.preprocessor.get_columns_with_zero_std_deviation(self.data)
+            # self.data = self.preprocessor.remove_column(self.data, self.col_to_drop)
+            #
+            # self.data.to_csv("wafer/prediction/prediction_artifact/data_after_remove_unwanted_col.csv")
+
             self.data = self.preprocessor.get_data(self.path)
+            self.col_to_drop = self.preprocessor.get_columns_with_zero_std_deviation(self.data.drop('Good/Bad', axis=1))
+            self.data = self.preprocessor.remove_column(self.data, self.col_to_drop)
             self.data = self.preprocessor.remove_column(self.data, 'Wafer')
+
             flage = self.preprocessor.is_null_present(self.data)
-            
             if flage == 1:
                 self.data = self.preprocessor.null_value_impute(self.data)
-                
+
+            self.data.to_csv("wafer/core_ml/data_preprocessing/Data_after_imputation.csv", index=False)
             X, Y = self.preprocessor.separate_label_feature(self.data, "Good/Bad")
-            self.col_to_drop = self.preprocessor.get_columns_with_zero_std_deviation(self.data)
-            self.data = self.preprocessor.remove_column(self.data, self.col_to_drop)
+            Y = self.data['Good/Bad']
+            Y.to_csv("wafer/core_ml/data_preprocessing/Y.csv", index=False)
+
+            self.data.to_csv("wafer/prediction/prediction_artifact/data_after_remove_unwanted_col.csv", index=False)
 
             #####  Applying the Clustering Approach #####
             kmeans = KMeansClustering()
-            number_of_clusters = kmeans.elbow_plot(X)
+            number_of_clusters = kmeans.elbow_plot(self.data)
 
-            X = kmeans.create_clusters(X, number_of_clusters)
+            X = kmeans.create_clusters(self.data, number_of_clusters)
             X['Labels'] = Y
 
             list_of_clusters = X['Cluster'].unique()

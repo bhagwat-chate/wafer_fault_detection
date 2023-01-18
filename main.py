@@ -12,12 +12,12 @@ if __name__ == '__main__':
 
         # data_ingestion = TrainingDataPipeline()
         # data_ingestion.train_data_validation()
-        #
-        # model_training = Model_Training_Pipeline()
-        # model_training.train_model()
 
-        prediction = Prediction_Pipeline()
-        prediction.prediction_pipeline_execute()
+        model_training = Model_Training_Pipeline()
+        model_training.train_model()
+
+        # prediction = Prediction_Pipeline()
+        # prediction.prediction_pipeline_execute()
 
         logging.info("END OF WAFER FAULT DETECTION PROJECT EXECUTION")
 
