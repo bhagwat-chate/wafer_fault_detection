@@ -34,7 +34,7 @@ class Prediction_DB_Operation:
         try:
             data = pd.DataFrame(list(self.collectionConnection.find()))
             data.drop(['_id', 'Unnamed: 0'], axis=1, inplace=True)
-            data.to_csv("wafer/data_ingestion/Data_Export/Training_data.csv", index=False)
+            data.to_csv("wafer/prediction_pipeline/prediction_artifact/data_for_prediction.csv", index=False)
 
             logging.info("prediction data extraction from MongoDB complete!")
             return data
