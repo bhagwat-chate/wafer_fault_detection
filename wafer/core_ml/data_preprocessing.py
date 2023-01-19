@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from sklearn.impute import KNNImputer, SimpleImputer
+from sklearn.impute import KNNImputer
 from wafer.logger import logging
 from wafer.exception import WaferException
 import sys

@@ -56,7 +56,6 @@ class Prediction_Data_Validation:
         for file in os.listdir("wafer/Prediction_Batch_Files/"):
             shutil.copy("wafer/Prediction_Batch_Files/"+file, "wafer/prediction_pipeline/prediction_artifact/Good_data/")
 
-        # onlyfiles = [f for f in listdir(self.batch_directory)]
         onlyfiles = [f for f in os.listdir("wafer/prediction_pipeline/prediction_artifact/Good_data/")]
         try:
             for filename in onlyfiles:
@@ -89,8 +88,6 @@ class Prediction_Data_Validation:
             logging.info("Column length validation complete")
         except WaferException as e:
             raise WaferException(e, sys)
-
-
     def validate_missing_values_in_whole_column(self):
         try:
             for file in os.listdir("wafer/prediction_pipeline/prediction_artifact/Good_data/"):
@@ -135,9 +132,6 @@ class Prediction_Data_Validation:
 
         except WaferException as e:
             raise WaferException(e, sys)
-
-
-
     def delete_existing_good_bad_data_directories(self):
         try:
 
@@ -153,7 +147,6 @@ class Prediction_Data_Validation:
 
         except WaferException as e:
             raise WaferException(e, sys)
-
     def create_good_bad_directories(self):
         path = 'wafer/prediction_pipeline/prediction_artifact/'
 

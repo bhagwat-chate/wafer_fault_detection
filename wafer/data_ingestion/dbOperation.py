@@ -8,6 +8,7 @@ import json
 import warnings
 warnings.filterwarnings('ignore')
 
+
 class DB_Operation:
     def __init__(self):
         self.goodFilePath = "wafer/data_ingestion/Training_raw_files_validated/Good_Raw"

@@ -5,7 +5,6 @@ from wafer.core_ml.model_tuner import Model_Finder
 from wafer.core_ml.file_methods import File_Operations
 from wafer.logger import logging
 from wafer.exception import WaferException
-import json
 import sys
 import pandas as pd
 
@@ -15,28 +14,11 @@ class Model_Training_Pipeline:
         self.col_to_drop = None
         self.data = None
         logging.info("### Model Training Pipeline Initiated ###")
-        # with open("wafer/constant/model_training_constants.json","r") as f:
-        #     dic = json.load(f)
-        #     f.close()
         self.path = "wafer/data_ingestion/Data_Export/Training_data.csv"
-        # self.path = dic["train_data"]
         self.preprocessor = Preprocessor()
 
     def train_model(self):
         try:
-            # self.data = self.preprocessor.get_data(self.path)
-            # self.data = self.preprocessor.remove_column(self.data, 'Wafer')
-            # flage = self.preprocessor.is_null_present(self.data)
-            #
-            # if flage == 1:
-            #     self.data = self.preprocessor.null_value_impute(self.data)
-            #
-            # X, Y = self.preprocessor.separate_label_feature(self.data, "Good/Bad")
-            # self.col_to_drop = self.preprocessor.get_columns_with_zero_std_deviation(self.data)
-            # self.data = self.preprocessor.remove_column(self.data, self.col_to_drop)
-            #
-            # self.data.to_csv("wafer/prediction/prediction_artifact/data_after_remove_unwanted_col.csv")
-
             self.data = self.preprocessor.get_data(self.path)
             self.col_to_drop = self.preprocessor.get_columns_with_zero_std_deviation(self.data.drop('Good/Bad', axis=1))
             self.data = self.preprocessor.remove_column(self.data, self.col_to_drop)
@@ -61,7 +43,6 @@ class Model_Training_Pipeline:
             self.data.drop('Good/Bad', axis=1).to_csv("wafer/core_ml/data_preprocessing/data_for_clustering.csv", index=False)
             X = kmeans.create_clusters(self.data.drop('Good/Bad', axis=1), number_of_clusters)
             X['Labels'] = Y
-            # train_col = pd.DataFrame(data=X.columns, columns=['training_col_list'])
             pd.DataFrame(data=X.columns, columns=['training_col_list']).to_csv("wafer/core_ml/data_preprocessing/training_col_list.csv", index=False)
 
             list_of_clusters = X['Cluster'].unique()
@@ -84,8 +65,3 @@ class Model_Training_Pipeline:
 
         except WaferException as e:
             raise WaferException(e, sys)
-
-        
-
-
-

@@ -9,6 +9,7 @@ from os import listdir
 from wafer.logger import logging
 from wafer.exception import WaferException
 
+
 class Raw_Data_Validation:
     """
     This class shall be used for handling all the validation done on the raw training data!
@@ -107,7 +108,6 @@ class Raw_Data_Validation:
         Version: 1.0
         Revisions: None
         """
-
         try:
             path = 'wafer/data_ingestion/Training_raw_files_validated/'
             if os.path.isdir(path+'Bad_Raw/'):
@@ -159,11 +159,6 @@ class Raw_Data_Validation:
             source = "wafer/data_ingestion/Training_raw_files_validated/Bad_Raw/"
 
             if os.path.isdir(source):
-                # path = "TrainingArchiveBadData"
-                #
-                # if not os.path.isdir(path):
-                #     os.makedirs(path)
-
                 dest = 'wafer/archive/training/Bad_Data_' + str(date) + "_" + str(time)
                 if not os.path.isdir(dest):
                     os.makedirs(dest)
@@ -212,11 +207,8 @@ class Raw_Data_Validation:
 
     def validateColumnLength(self, numberOfColumns):
         try:
-
             for file in listdir("wafer/Training_Batch_Files/"):
-
                 csv = pd.read_csv("wafer/Training_Batch_Files/" + file)
-
                 if csv.shape[1] == numberOfColumns:
                     shutil.copy("wafer/Training_Batch_Files/"+file, "wafer/data_ingestion/Training_raw_files_validated/Good_Raw")
                     logging.info("File {} moved from 'wafer/Training_Batch_Files' to Bad raw".format(file))

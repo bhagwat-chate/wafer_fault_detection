@@ -3,8 +3,6 @@ from wafer.prediction_pipeline.prediction_DB_operation import Prediction_DB_Oper
 from wafer.prediction_pipeline.prediction_data_validation import Prediction_Data_Validation
 from wafer.prediction_pipeline.prediction_data_transformation import Prediction_Data_Transformation
 from wafer.core_ml.file_methods import File_Operations
-import os
-import shutil
 from wafer.logger import logging
 from wafer.exception import WaferException
 import sys
@@ -41,10 +39,8 @@ class Prediction_Pipeline:
             self.prediction_DB_operation_obj.load_data()
             data_with_wafer = self.prediction_DB_operation_obj.get_data()
             data = data_with_wafer.drop('wafer', axis=1)
-            data_with_wafer.to_csv("wafer/prediction_pipeline/prediction_artifact/data_for_prediction.csv", index=False)
 
             data = self.prediction_data_transformation_obj.remove_unwanted_column(data)
-            data.to_csv("wafer/prediction_pipeline/prediction_artifact/data_for_prediction_after_removing_unwanted_col.csv", index=False)
 
             kmeans = self.file_operations_obj.load_model_prediction('KMeans')
             clusters = kmeans.predict(data)
@@ -58,18 +54,12 @@ class Prediction_Pipeline:
                 cluster_data.drop(['wafer','clusters'], axis=1, inplace=True)
 
                 model_name = self.file_operations_obj.find_correct_model_file(i)
-                model = self.file_operations_obj.load_model(model_name)
+                model = self.file_operations_obj.load_model_prediction(model_name)
                 result = list(model.predict(cluster_data))
                 result = pd.DataFrame(list(zip(wafer_name, result)), columns=['wafer', 'prediction'])
 
                 result.to_csv("wafer/prediction_pipeline/prediction_artifact/PREDICTION_RESULT.csv", index=False, mode='a+')
+                logging.info("predictions with model '{}' complete".format(model_name))
             logging.info("### Prediction Pipeline Execution Complete ###")
-                # cluster_data.to_csv("wafer/prediction_pipeline/prediction_artifact/cluster_data.csv", index=False)
-
         except WaferException as e:
             raise WaferException(e, sys)
-
-
-
-
-

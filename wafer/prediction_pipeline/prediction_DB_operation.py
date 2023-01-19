@@ -17,8 +17,6 @@ class Prediction_DB_Operation:
         client = pymongo.MongoClient(self.mongodb)
         self.DBConnection = client[self.dbname]
         self.collectionConnection = self.DBConnection[self.collectionName]
-
-
     def load_data(self):
         try:
             for file in os.listdir("wafer/prediction_pipeline/prediction_artifact/Good_data/"):
