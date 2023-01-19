@@ -17,7 +17,7 @@ class Model_Training_Pipeline:
         self.path = "wafer/data_ingestion/Data_Export/Training_data.csv"
         self.preprocessor = Preprocessor()
 
-    def train_model(self):
+    def train_model(self, path):
         try:
             self.data = self.preprocessor.get_data(self.path)
             self.col_to_drop = self.preprocessor.get_columns_with_zero_std_deviation(self.data.drop('Good/Bad', axis=1))

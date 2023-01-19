@@ -20,7 +20,7 @@ class Prediction_Pipeline:
 
         self.col_to_del = None
 
-    def prediction_pipeline_execution(self):
+    def prediction_pipeline_execution(self, path):
         try:
             self.predict_from_model_obj.delete_prediction_file()
 
@@ -51,14 +51,16 @@ class Prediction_Pipeline:
             for i in clusters:
                 cluster_data = data[data['clusters'] == i]
                 wafer_name = list(cluster_data['wafer'])
-                cluster_data.drop(['wafer','clusters'], axis=1, inplace=True)
+                cluster_data.drop(['wafer', 'clusters'], axis=1, inplace=True)
 
                 model_name = self.file_operations_obj.find_correct_model_file(i)
                 model = self.file_operations_obj.load_model_prediction(model_name)
                 result = list(model.predict(cluster_data))
                 result = pd.DataFrame(list(zip(wafer_name, result)), columns=['wafer', 'prediction'])
 
-                result.to_csv("wafer/prediction_pipeline/prediction_artifact/PREDICTION_RESULT.csv", index=False, mode='a+')
+                # result.to_csv("wafer/prediction_pipeline/prediction_artifact/PREDICTION_RESULT.csv", index=False, mode='a+')
+                result.to_json("wafer/prediction_pipeline/prediction_artifact/PREDICTION_RESULT.json")
+
                 logging.info("predictions with model '{}' complete".format(model_name))
             logging.info("### Prediction Pipeline Execution Complete ###")
         except WaferException as e:
