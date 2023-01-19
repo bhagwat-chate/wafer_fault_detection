@@ -33,7 +33,8 @@ class Prediction_DB_Operation:
     def get_data(self):
         try:
             data = pd.DataFrame(list(self.collectionConnection.find()))
-            data.drop(['_id', 'Unnamed: 0'], axis=1, inplace=True)
+            data.drop(['_id'], axis=1, inplace=True)
+            data.rename(columns={'Unnamed: 0': 'wafer'}, inplace=True)
             data.to_csv("wafer/prediction_pipeline/prediction_artifact/data_for_prediction.csv", index=False)
 
             logging.info("prediction data extraction from MongoDB complete!")

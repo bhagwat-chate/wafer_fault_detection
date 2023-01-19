@@ -7,6 +7,7 @@ from wafer.logger import logging
 from wafer.exception import WaferException
 import json
 import sys
+import pandas as pd
 
 
 class Model_Training_Pipeline:
@@ -14,10 +15,11 @@ class Model_Training_Pipeline:
         self.col_to_drop = None
         self.data = None
         logging.info("### Model Training Pipeline Initiated ###")
-        with open("wafer/constant/model_training_constants.json","r") as f:
-            dic = json.load(f)
-            f.close()
-        self.path = dic["train_data"]
+        # with open("wafer/constant/model_training_constants.json","r") as f:
+        #     dic = json.load(f)
+        #     f.close()
+        self.path = "wafer/data_ingestion/Data_Export/Training_data.csv"
+        # self.path = dic["train_data"]
         self.preprocessor = Preprocessor()
 
     def train_model(self):
@@ -49,14 +51,18 @@ class Model_Training_Pipeline:
             Y = self.data['Good/Bad']
             Y.to_csv("wafer/core_ml/data_preprocessing/Y.csv", index=False)
 
-            self.data.to_csv("wafer/prediction/prediction_artifact/data_after_remove_unwanted_col.csv", index=False)
+            self.data.to_csv("wafer/core_ml/data_preprocessing/data_after_remove_unwanted_col.csv", index=False)
 
             #####  Applying the Clustering Approach #####
-            kmeans = KMeansClustering()
-            number_of_clusters = kmeans.elbow_plot(self.data)
 
-            X = kmeans.create_clusters(self.data, number_of_clusters)
+            kmeans = KMeansClustering()
+            number_of_clusters = kmeans.elbow_plot(self.data.drop('Good/Bad', axis=1))
+
+            self.data.drop('Good/Bad', axis=1).to_csv("wafer/core_ml/data_preprocessing/data_for_clustering.csv", index=False)
+            X = kmeans.create_clusters(self.data.drop('Good/Bad', axis=1), number_of_clusters)
             X['Labels'] = Y
+            # train_col = pd.DataFrame(data=X.columns, columns=['training_col_list'])
+            pd.DataFrame(data=X.columns, columns=['training_col_list']).to_csv("wafer/core_ml/data_preprocessing/training_col_list.csv", index=False)
 
             list_of_clusters = X['Cluster'].unique()
 

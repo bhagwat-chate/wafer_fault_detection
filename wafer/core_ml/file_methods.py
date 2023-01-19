@@ -41,6 +41,15 @@ class File_Operations:
         except WaferException as e:
             raise WaferException(e, sys)
 
+    def load_model_prediction(self, filename):
+        try:
+            with open(self.model_directory + '/' + filename + '/' + filename + '.sav', 'rb') as f:
+                logging.info("Model file '{}' load successful".format(filename))
+
+                return pickle.load(f)
+        except WaferException as e:
+            raise WaferException(e, sys)
+
     def find_correct_model_file(self, cluster_number):
         try:
             self.cluster_number = cluster_number

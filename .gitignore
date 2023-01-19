@@ -11,9 +11,9 @@ wafer/core_ml/models
 wafer/prediction/prediction_artifact
 wafer/prediction/prediction_raw_files_validated
 wafer/archive
-wafer/data_ingestion/Data_Export
+wafer/data_ingestion/Data_Export/
 wafer/prediction_pipeline/prediction_artifact/Good_data
-wafer/prediction_pipeline/prediction_artifact/data_for_prediction.csv
+wafer/prediction_pipeline/prediction_artifact/
 
 # C extensions
 *.so
