@@ -199,11 +199,10 @@
 					type: "POST",
 					data: {filepath:path},
 					success: function(response){
-						$(".json-result").html('<p>"Prediction File created !!!</p><pre>' + response + '</pre>');
+						$(".json-result").html('<p>Prediction file created</p><pre>' + response + '</pre>');
 						$('#loading').hide();
 					}
 				});
-
 			});
 		});
 	</script>

@@ -7,6 +7,7 @@ from wafer.logger import logging
 from wafer.exception import WaferException
 import sys
 import pandas as pd
+from flask import jsonify
 
 
 class Prediction_Pipeline:
@@ -47,6 +48,7 @@ class Prediction_Pipeline:
             data['clusters'] = clusters
             clusters = data['clusters'].unique()
 
+            result = None
             data['wafer'] = data_with_wafer['wafer']
             for i in clusters:
                 cluster_data = data[data['clusters'] == i]
@@ -58,10 +60,15 @@ class Prediction_Pipeline:
                 result = list(model.predict(cluster_data))
                 result = pd.DataFrame(list(zip(wafer_name, result)), columns=['wafer', 'prediction'])
 
-                # result.to_csv("wafer/prediction_pipeline/prediction_artifact/PREDICTION_RESULT.csv", index=False, mode='a+')
+                result.to_csv("wafer/prediction_pipeline/prediction_artifact/PREDICTION_RESULT.csv", index=False, mode='a+')
                 result.to_json("wafer/prediction_pipeline/prediction_artifact/PREDICTION_RESULT.json")
 
                 logging.info("predictions with model '{}' complete".format(model_name))
+
             logging.info("### Prediction Pipeline Execution Complete ###")
+            return path, result.head().to_json(orient="records")
         except WaferException as e:
             raise WaferException(e, sys)
+
+
+
