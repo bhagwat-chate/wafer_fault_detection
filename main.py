@@ -48,9 +48,9 @@ def predictRouteClient():
 
             prediction_pipeline_obj = Prediction_Pipeline()
             path, json_predictions = prediction_pipeline_obj.prediction_pipeline_execution(path)
-            # return Response("Prediction File created: " +str(path) +' and few of the predictions are '+str(json.loads(json_predictions)))
+            return Response("Prediction File created: " +(path) +'and few of the predictions are'+(json.loads(json_predictions)))
 
-            return render_template('results.html', result=json_predictions)
+            # return render_template('results.html', result=json_predictions)
         else:
             print('Nothing Matched')
 
