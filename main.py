@@ -75,7 +75,7 @@ if __name__ == '__main__':
         # prediction_pipeline = Prediction_Pipeline()
         # prediction_pipeline.prediction_pipeline_execution('path')
 
-        app.run(debug=True, port=5000)
+        app.run(host="0.0.0.0", port=5000)
         logging.info("END OF WAFER FAULT DETECTION PROJECT EXECUTION")
 
     except WaferException as e:
