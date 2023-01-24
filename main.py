@@ -66,14 +66,14 @@ if __name__ == '__main__':
     try:
         logging.info("START OF WAFER FAULT DETECTION PROJECT EXECUTION")
 
-        # data_ingestion = TrainingDataPipeline()
-        # data_ingestion.train_data_validation()
+        data_ingestion = TrainingDataPipeline()
+        data_ingestion.train_data_validation()
 
-        # model_training = Model_Training_Pipeline()
-        # model_training.train_model()
+        model_training = Model_Training_Pipeline()
+        model_training.train_model()
 
-        # prediction_pipeline = Prediction_Pipeline()
-        # prediction_pipeline.prediction_pipeline_execution('path')
+        prediction_pipeline = Prediction_Pipeline()
+        prediction_pipeline.prediction_pipeline_execution('path')
 
         app.run(host="0.0.0.0", port=5000)
         logging.info("END OF WAFER FAULT DETECTION PROJECT EXECUTION")
