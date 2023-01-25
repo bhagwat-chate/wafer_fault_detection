@@ -13,7 +13,8 @@ wafer/archive
 wafer/data_ingestion/Data_Export/
 wafer/prediction_pipeline/prediction_artifact/Good_data
 wafer/prediction_pipeline/prediction_artifact/
-wafer/constant/secrets/*
+wafer/constant/secrets/credentials.json
+
 
 # C extensions
 *.so
