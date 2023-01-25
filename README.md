@@ -95,3 +95,12 @@ docker build --build-arg AWS_ACCESS_KEY_ID=<AWS_ACCESS_KEY_ID> --build-arg AWS_S
 docker run -d -p 8080:8080 <IMAGE_NAME>
 ```
 
+To run the project  first execute the below commmand.
+MONGO DB URL: 
+```
+mongodb+srv://username:password@cluster0.q06oiaw.mongodb.net/?retryWrites=true&w=majority
+```
+Run the application 
+```
+python main.py
+```
