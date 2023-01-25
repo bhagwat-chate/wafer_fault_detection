@@ -1,5 +1,5 @@
 {
   "dbname": "prediction_waferdb",
   "collectionName": "prediction_waferCollection",
-  "mongodb": "mongodb+srv://Bhagwat_c:Bchate2023@cluster0.q06oiaw.mongodb.net/?retryWrites=true&w=majority"
+  "mongodb": "mongodb+srv://username:password@cluster0.q06oiaw.mongodb.net/?retryWrites=true&w=majority"
 }

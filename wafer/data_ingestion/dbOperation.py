@@ -13,12 +13,24 @@ class DB_Operation:
     def __init__(self):
         self.goodFilePath = "wafer/data_ingestion/Training_raw_files_validated/Good_Raw"
         self.badFilePath = "wafer/data_ingestion/Training_raw_files_validated/Bad_Raw"
-        with open("wafer/constant/DBOperation.json","r") as f:
+        with open("wafer/constant/DBOperation.json", "r") as f:
             dic = json.load(f)
             f.close()
+
+        with open("wafer/constant/secrets/credentials.json", "r") as f1:
+            credential = json.load(f1)
+            f1.close()
+
         self.dbname = dic["dbname"]
         self.collectionName = dic['collectionName']
         self.mongodb = dic['mongodb']
+
+        self.username = credential['username']
+        self.password = credential["password"]
+
+        self.mongodb = self.mongodb.replace("username", self.username)
+        self.mongodb = self.mongodb.replace("password", self.password)
+
         client = pymongo.MongoClient(self.mongodb)
         self.DBConnection = client[self.dbname]
         self.collectionConnection = self.DBConnection[self.collectionName]
